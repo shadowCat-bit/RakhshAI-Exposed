@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Observers;
+
+use App\Events\UserPointEvent;
+use App\Models\Point;
+use App\Models\Transaction;
+
+class TransactionObserver {
+
+    /**
+     * Handle the Transaction "created" event.
+     */
+    public function created(Transaction $transaction): void {
+        //
+    }
+
+    /**
+     * Handle the Transaction "updated" event.
+     */
+    public function updated(Transaction $transaction): void {
+        if ($transaction->tr_status == 'success') {
+            $pointType = 'purchase_package_' . $transaction->package_id;
+            event(new UserPointEvent(null, $transaction->user_id, $pointType));
+        }
+    }
+
+    /**
+     * Handle the Transaction "deleted" event.
+     */
+    public function deleted(Transaction $transaction): void {
+        //
+    }
+
+    /**
+     * Handle the Transaction "restored" event.
+     */
+    public function restored(Transaction $transaction): void {
+        //
+    }
+
+    /**
+     * Handle the Transaction "force deleted" event.
+     */
+    public function forceDeleted(Transaction $transaction): void {
+        //
+    }
+}
