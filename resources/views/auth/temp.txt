@@ -1,0 +1,13 @@
+  if ($("#countdown-verify-end").length) {
+    var $countdownOptionEnd = $("#countdown-verify-end");
+    $countdownOptionEnd.countdown({
+        date: (new Date()).getTime() + 60 * 1000, // 1 minute later
+        text: '<span class="day">%s</span><span class="hour">%s</span><span>: %s</span><span>%s</span>',
+        end: function() {
+            @if (request('refer') != 'cart')
+                $countdownOptionEnd.html("<a href='{{route('verify', ['username' => $username, 'reSend' => 'yes', 'return' => request('return')])}}' class='btn-link-border'>ارسال مجدد</a>");
+            @else
+                $countdownOptionEnd.html("<a href='{{route('verify', ['username' => $username, 'reSend' => 'yes', 'refer' => 'cart', 'return' => request('return')])}}' class='btn-link-border'>ارسال مجدد</a>");
+            @endif
+        }
+    });
