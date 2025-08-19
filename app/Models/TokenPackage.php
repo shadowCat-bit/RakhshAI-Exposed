@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class TokenPackage extends Model {
+
+    protected $guarded = [];
+    protected $appends = ['logo_img'];
+
+    public function getLogoImgAttribute() {
+
+        return asset('assets/images/main/' . $this->image);
+    }
+}
